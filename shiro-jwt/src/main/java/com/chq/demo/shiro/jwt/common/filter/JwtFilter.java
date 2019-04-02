@@ -22,7 +22,7 @@ import java.net.URLEncoder;
  * @Description
  * @date 2019/4/2
  */
-public class JWTFilter extends BasicHttpAuthenticationFilter {
+public class JwtFilter extends BasicHttpAuthenticationFilter {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
