@@ -11,6 +11,7 @@
     <modules>
         <module>shiro-jwt</module>
         <module>security-jwt</module>
+        <module>demo-eureka</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
