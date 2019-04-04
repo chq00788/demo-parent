@@ -1,7 +1,7 @@
 package com.chq.demo.shiro.jwt.common.config;
 
 
-import com.chq.demo.shiro.jwt.common.filter.JWTFilter;
+import com.chq.demo.shiro.jwt.common.filter.JwtFilter;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SecurityManager;
@@ -36,7 +36,7 @@ public class ShiroConfig {
         // 添加自己的过滤器并且取名为jwt
         Map<String, Filter> filterMap = new HashMap<>();
         //设置我们自定义的JWT过滤器
-        filterMap.put("jwt", new JWTFilter());
+        filterMap.put("jwt", new JwtFilter());
         factoryBean.setFilters(filterMap);
         factoryBean.setSecurityManager(securityManager);
         // 设置无权限时跳转的 url;

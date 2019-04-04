@@ -1,8 +1,8 @@
 package com.chq.demo.shiro.jwt.common.config;
 
 import com.chq.demo.shiro.jwt.common.entity.JwtToken;
-import com.chq.demo.shiro.jwt.service.UserService;
 import com.chq.demo.shiro.jwt.common.utils.JwtUtil;
+import com.chq.demo.shiro.jwt.system.service.UserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -14,7 +14,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -46,16 +45,19 @@ public class CustomRealm extends AuthorizingRealm {
         String token = (String) authenticationToken.getCredentials();
         // 解密获得username，用于和数据库进行对比
         String username = JwtUtil.getUsername(token);
-        if (username == null || !JwtUtil.verify(token, username)) {
+        if (username == null) {
             throw new AuthenticationException("token认证失败！");
         }
         String password = userService.getPassword(username);
         if (password == null) {
             throw new AuthenticationException("该用户不存在！");
         }
+        if (!JwtUtil.verify(token, username, password)) {
+            throw new AuthenticationException("用户名或密码错误");
+        }
         int ban = userService.checkUserBanStatus(username);
         if (ban == 1) {
-            throw new AuthenticationException("该用户已被封号！");
+            throw new AuthenticationException("该账号已被禁用!");
         }
         return new SimpleAuthenticationInfo(token, token, "MyRealm");
     }
@@ -66,22 +68,13 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         System.out.println("————权限认证————");
+        //获取用户名
         String username = JwtUtil.getUsername(principals.toString());
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        //获得该用户角色
-        String role = userService.getRole(username);
-        //每个角色拥有默认的权限
-        String rolePermission = userService.getRolePermission(username);
-        //每个用户可以设置新的权限
-        String permission = userService.getPermission(username);
-        Set<String> roleSet = new HashSet<>();
-        Set<String> permissionSet = new HashSet<>();
-        //需要将 role, permission 封装到 Set 作为 info.setRoles(), info.setStringPermissions() 的参数
-        roleSet.add(role);
-        permissionSet.add(rolePermission);
-        permissionSet.add(permission);
-        //设置该用户拥有的角色和权限
-        info.setRoles(roleSet);
+        //获取该用户所有权限
+        Set<String> permissionSet = userService.getPermission(username);
+        //需要将 permission 封装到 Set 作为info.setStringPermissions() 的参数
+        //设置该用户拥有和权限
         info.setStringPermissions(permissionSet);
         return info;
     }

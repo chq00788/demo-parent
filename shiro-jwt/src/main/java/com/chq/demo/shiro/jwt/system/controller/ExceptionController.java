@@ -1,6 +1,6 @@
-package com.chq.demo.shiro.jwt.controller;
+package com.chq.demo.shiro.jwt.system.controller;
 
-import com.chq.demo.shiro.jwt.common.entity.ResultMap;
+import com.chq.demo.shiro.jwt.common.entity.Response;
 import org.apache.shiro.ShiroException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,9 +23,10 @@ public class ExceptionController {
      * @return
      */
     @ExceptionHandler(ShiroException.class)
-    public ResultMap handle401() {
-        ResultMap resultMap = new ResultMap();
-        return resultMap.fail().code(401).message("您没有权限访问！");
+    public Response<String> handle401() {
+        Response<String> result = new Response<>();
+        result.setError("您没有权限访问!");
+        return result;
     }
 
     /**
@@ -36,11 +37,10 @@ public class ExceptionController {
      * @return
      */
     @ExceptionHandler(Exception.class)
-    public ResultMap globalException(HttpServletRequest request, Throwable ex) {
-        ResultMap resultMap = new ResultMap();
-        return resultMap.fail()
-                .code(getStatus(request).value())
-                .message("访问出错，无法访问: " + ex.getMessage());
+    public Response<String> globalException(HttpServletRequest request, Throwable ex) {
+        Response<String> result = new Response<>();
+        result.setError("访问异常");
+        return result;
     }
 
     private HttpStatus getStatus(HttpServletRequest request) {

@@ -1,7 +1,6 @@
-package com.chq.demo.shiro.jwt.controller;
+package com.chq.demo.shiro.jwt.system.controller;
 
 import com.chq.demo.shiro.jwt.common.entity.ResultMap;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,13 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2019/4/2
  */
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/admin")
+public class AdminController {
 
     @RequestMapping(value = "/getMessage", method = RequestMethod.GET)
-    @RequiresRoles({"user"})
     public ResultMap getMessage() {
         ResultMap resultMap = new ResultMap();
-        return resultMap.success().message("您拥有用户权限，可以获得该接口的信息！");
+        return resultMap.success().message("您拥有管理员权限，可以获得该接口的信息！");
     }
 }

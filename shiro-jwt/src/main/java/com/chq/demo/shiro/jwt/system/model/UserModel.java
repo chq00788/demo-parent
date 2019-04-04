@@ -1,4 +1,4 @@
-package com.chq.demo.shiro.jwt.model;
+package com.chq.demo.shiro.jwt.system.model;
 
 /**
  * @author CHQ
@@ -14,6 +14,27 @@ public class UserModel {
     private String password;
 
     private String salt;
+
+    private String role;
+
+    private String permission;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
+
 
     public Integer getId() {
         return id;

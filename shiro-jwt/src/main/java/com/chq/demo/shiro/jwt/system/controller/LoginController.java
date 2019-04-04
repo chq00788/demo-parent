@@ -1,9 +1,9 @@
-package com.chq.demo.shiro.jwt.controller;
+package com.chq.demo.shiro.jwt.system.controller;
 
 import com.chq.demo.shiro.jwt.common.entity.Response;
 import com.chq.demo.shiro.jwt.common.utils.JwtUtil;
-import com.chq.demo.shiro.jwt.model.UserModel;
-import com.chq.demo.shiro.jwt.service.UserService;
+import com.chq.demo.shiro.jwt.system.model.UserModel;
+import com.chq.demo.shiro.jwt.system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,16 +33,14 @@ public class LoginController {
         String realPassword = userService.getPassword(user.getUsername());
         if (realPassword == null) {
             result.setError("用户名错误");
-            return result;
         } else if (!realPassword.equals(user.getPassword())) {
             result.setError("密码错误");
-            return result;
         } else {
-            String token = JwtUtil.createToken(user.getUsername());
+            String token = JwtUtil.sign(user.getUsername(), realPassword);
             response.setHeader("auth-token", token);
             result.setResult("登录成功");
-            return result;
         }
+        return result;
     }
 
     @RequestMapping(path = "/unauthorized/{message}")
