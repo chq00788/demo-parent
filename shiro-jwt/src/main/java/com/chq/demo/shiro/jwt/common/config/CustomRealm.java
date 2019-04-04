@@ -41,19 +41,18 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.out.println("————身份认证方法————");
         String token = (String) authenticationToken.getCredentials();
         // 解密获得username，用于和数据库进行对比
         String username = JwtUtil.getUsername(token);
         if (username == null) {
-            throw new AuthenticationException("token认证失败！");
+            throw new AuthenticationException("认证失败,请重新登录!");
         }
         String password = userService.getPassword(username);
         if (password == null) {
-            throw new AuthenticationException("该用户不存在！");
+            throw new AuthenticationException("该用户不存在!");
         }
         if (!JwtUtil.verify(token, username, password)) {
-            throw new AuthenticationException("用户名或密码错误");
+            throw new AuthenticationException("登录信息过期,请重新登录!");
         }
         int ban = userService.checkUserBanStatus(username);
         if (ban == 1) {
@@ -67,7 +66,6 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        System.out.println("————权限认证————");
         //获取用户名
         String username = JwtUtil.getUsername(principals.toString());
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();

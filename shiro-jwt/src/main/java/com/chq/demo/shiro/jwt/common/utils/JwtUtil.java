@@ -14,8 +14,10 @@ import java.util.Date;
  * @date 2019/4/2
  */
 public class JwtUtil {
-    // 过期时间5分钟
-    private static final long EXPIRE_TIME = 5 * 60 * 1000;
+    /**
+     * 过期时间 7 天
+     */
+    private static final long EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000;
 
     /**
      * 校验token是否正确
