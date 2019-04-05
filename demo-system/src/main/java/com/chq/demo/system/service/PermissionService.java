@@ -1,8 +1,9 @@
 package com.chq.demo.system.service;
 
 
+import com.chq.demo.common.model.system.PermissionModel;
 import com.chq.demo.system.dao.PermissionDao;
-import com.chq.demo.system.model.PermissionModel;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

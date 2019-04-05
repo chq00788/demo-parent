@@ -1,10 +1,11 @@
 package com.chq.demo.system.service;
 
 
+import com.chq.demo.common.model.system.PermissionModel;
+import com.chq.demo.common.model.system.RoleModel;
+import com.chq.demo.common.model.system.UserModel;
 import com.chq.demo.system.dao.UserDao;
-import com.chq.demo.system.model.PermissionModel;
-import com.chq.demo.system.model.RoleModel;
-import com.chq.demo.system.model.UserModel;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

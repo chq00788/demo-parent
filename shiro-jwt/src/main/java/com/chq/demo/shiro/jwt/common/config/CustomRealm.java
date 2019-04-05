@@ -1,5 +1,9 @@
 package com.chq.demo.shiro.jwt.common.config;
 
+import com.chq.demo.common.entity.Response;
+import com.chq.demo.common.model.system.PermissionModel;
+import com.chq.demo.common.model.system.UserModel;
+import com.chq.demo.shiro.jwt.client.SystemService;
 import com.chq.demo.shiro.jwt.common.entity.JwtToken;
 import com.chq.demo.shiro.jwt.common.utils.JwtUtil;
 import com.chq.demo.shiro.jwt.system.service.UserService;
@@ -14,6 +18,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,6 +32,9 @@ public class CustomRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private SystemService systemService;
 
 
     /**
@@ -47,15 +56,16 @@ public class CustomRealm extends AuthorizingRealm {
         if (username == null) {
             throw new AuthenticationException("认证失败,请重新登录!");
         }
-        String password = userService.getPassword(username);
-        if (password == null) {
+        Response<UserModel> response = systemService.getByUsername(username);
+        UserModel user = response.getResult();
+        if (user == null) {
             throw new AuthenticationException("该用户不存在!");
         }
-        if (!JwtUtil.verify(token, username, password)) {
-            throw new AuthenticationException("登录信息过期,请重新登录!");
-        }
-        int ban = userService.checkUserBanStatus(username);
-        if (ban == 1) {
+//        if (!JwtUtil.verify(token, username, user.getPassword())) {
+//            throw new AuthenticationException("登录信息过期,请重新登录!");
+//        }
+        int ban = Integer.valueOf(user.getIsUsable());
+        if (ban == 0) {
             throw new AuthenticationException("该账号已被禁用!");
         }
         return new SimpleAuthenticationInfo(token, token, "MyRealm");
@@ -70,7 +80,11 @@ public class CustomRealm extends AuthorizingRealm {
         String username = JwtUtil.getUsername(principals.toString());
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //获取该用户所有权限
-        Set<String> permissionSet = userService.getPermission(username);
+        Response<List<PermissionModel>> response = systemService.getPermissionsByUsername(username);
+        Set<String> permissionSet = new HashSet<>();
+        for (PermissionModel model : response.getResult()) {
+            permissionSet.add(model.getPermCode());
+        }
         //需要将 permission 封装到 Set 作为info.setStringPermissions() 的参数
         //设置该用户拥有和权限
         info.setStringPermissions(permissionSet);

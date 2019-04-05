@@ -1,4 +1,4 @@
-package com.chq.demo.system.model;
+package com.chq.demo.common.model.system;
 
 import io.swagger.annotations.ApiModelProperty;
 

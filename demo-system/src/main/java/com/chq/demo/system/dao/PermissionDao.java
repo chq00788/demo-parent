@@ -1,7 +1,9 @@
 package com.chq.demo.system.dao;
 
 
-import com.chq.demo.system.model.PermissionModel;
+
+
+import com.chq.demo.common.model.system.PermissionModel;
 
 import java.util.List;
 import java.util.Map;

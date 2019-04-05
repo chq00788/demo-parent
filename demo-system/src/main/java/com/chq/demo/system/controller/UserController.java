@@ -2,9 +2,10 @@ package com.chq.demo.system.controller;
 
 
 import com.chq.demo.common.entity.Response;
+import com.chq.demo.common.model.system.PermissionModel;
+import com.chq.demo.common.model.system.UserModel;
 import com.chq.demo.common.utils.SearchUtil;
-import com.chq.demo.system.model.PermissionModel;
-import com.chq.demo.system.model.UserModel;
+
 import com.chq.demo.system.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -138,7 +139,7 @@ public class UserController {
 
     @ApiOperation(value = "根据用户名查询信息", notes = "根据ID查询信息", httpMethod = "GET")
     @RequestMapping(value = "/getByUsername")
-    public Response<UserModel> getByUsername(String username) {
+    public Response<UserModel> getByUsername(@RequestParam String username) {
         Response<UserModel> response = new Response<>();
         try {
             UserModel model = userService.getByUsername(username);
@@ -170,7 +171,7 @@ public class UserController {
 
     @ApiOperation(value = "查询用户权限信息", notes = "查询用户权限信息", httpMethod = "GET")
     @RequestMapping(value = "/getPermissionsByUsername")
-    public Response<List<PermissionModel>> getPermissionsByUsername(String username) {
+    public Response<List<PermissionModel>> getPermissionsByUsername(@RequestParam String username) {
         Response<List<PermissionModel>> response = new Response<>();
         try {
             List<PermissionModel> list = userService.getPermissionsByUsername(username);

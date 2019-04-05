@@ -15,7 +15,7 @@
         is_delete
     </sql>
 
-    <resultMap id="baseResultMap" type="com.chq.demo.system.model.PermissionModel">
+    <resultMap id="baseResultMap" type="com.chq.demo.common.model.system.PermissionModel">
         <id property="id" column="id"/>
         <result property="permName" column="perm_name"/>
         <result property="permCode" column="perm_code"/>
@@ -51,7 +51,7 @@
         and is_delete = 0
     </select>
 
-    <insert id="insert" parameterType="com.chq.demo.system.model.PermissionModel">
+    <insert id="insert" parameterType="com.chq.demo.common.model.system.PermissionModel">
         INSERT INTO t_system_permission(
             perm_name,
             perm_code,
@@ -75,7 +75,7 @@
         )
     </insert>
 
-    <update id="update" parameterType="com.chq.demo.system.model.PermissionModel">
+    <update id="update" parameterType="com.chq.demo.common.model.system.PermissionModel">
         UPDATE t_system_permission
         <set>
             <if test="permName != null and permName !=''  ">

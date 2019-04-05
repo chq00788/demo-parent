@@ -12,7 +12,7 @@
         is_delete
     </sql>
 
-    <resultMap id="baseResultMap" type="com.chq.demo.system.model.UserModel">
+    <resultMap id="baseResultMap" type="com.chq.demo.common.model.system.UserModel">
         <id property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
@@ -52,7 +52,7 @@
         ORDER BY ${sortCode} ${sortRole}
     </select>
 
-    <insert id="insert" parameterType="com.chq.demo.system.model.UserModel" useGeneratedKeys="true"
+    <insert id="insert" parameterType="com.chq.demo.common.model.system.UserModel" useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO t_system_user(
             username,
@@ -73,7 +73,7 @@
         )
     </insert>
 
-    <update id="update" parameterType="com.chq.demo.system.model.UserModel">
+    <update id="update" parameterType="com.chq.demo.common.model.system.UserModel">
         UPDATE t_system_user
         <set>
             <if test="username != null and username !=''  ">
@@ -124,7 +124,7 @@
     </insert>
 
 
-    <resultMap id="permResultMap" type="com.chq.demo.system.model.UserModel">
+    <resultMap id="permResultMap" type="com.chq.demo.common.model.system.UserModel">
         <id property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
@@ -133,13 +133,13 @@
         <result property="salt" column="salt"/>
         <result property="isUsable" column="is_usable"/>
         <result property="isDelete" column="is_delete"/>
-        <collection property="roleList" ofType="com.chq.demo.system.model.RoleModel">
+        <collection property="roleList" ofType="com.chq.demo.common.model.system.RoleModel">
             <id property="id" column="role_id"/>
             <result property="roleCode" column="role_code"/>
             <result property="roleName" column="role_name"/>
             <result property="isUsable" column="is_usable"/>
             <result property="isDelete" column="is_delete"/>
-            <collection property="permissionList" ofType="com.chq.demo.system.model.PermissionModel">
+            <collection property="permissionList" ofType="com.chq.demo.common.model.system.PermissionModel">
                 <id property="id" column="perm_id"/>
                 <result property="permName" column="perm_name"/>
                 <result property="permCode" column="perm_code"/>

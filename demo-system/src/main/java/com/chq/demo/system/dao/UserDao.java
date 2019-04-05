@@ -1,7 +1,7 @@
 package com.chq.demo.system.dao;
 
 
-import com.chq.demo.system.model.UserModel;
+import com.chq.demo.common.model.system.UserModel;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

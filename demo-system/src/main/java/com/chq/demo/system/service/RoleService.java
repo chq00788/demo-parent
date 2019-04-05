@@ -1,8 +1,9 @@
 package com.chq.demo.system.service;
 
 
+import com.chq.demo.common.model.system.RoleModel;
 import com.chq.demo.system.dao.RoleDao;
-import com.chq.demo.system.model.RoleModel;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
