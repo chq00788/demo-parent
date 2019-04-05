@@ -6,12 +6,14 @@
 
     <groupId>com.chq.demo</groupId>
     <artifactId>demo-parent</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
     <modules>
         <module>shiro-jwt</module>
         <module>security-jwt</module>
         <module>demo-eureka</module>
+        <module>demo-config</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
