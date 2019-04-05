@@ -1,7 +1,6 @@
 package com.chq.demo.system.controller;
 
 
-
 import com.chq.demo.common.entity.Response;
 import com.chq.demo.common.utils.SearchUtil;
 import com.chq.demo.system.model.PermissionModel;
@@ -163,6 +162,21 @@ public class UserController {
             response.setResult(list);
         } catch (Exception e) {
             log.error("查询用户菜单权限信息异常！原因：{}", e.getStackTrace());
+            e.printStackTrace();
+            response.setError("查询失败");
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "查询用户权限信息", notes = "查询用户权限信息", httpMethod = "GET")
+    @RequestMapping(value = "/getPermissionsByUsername")
+    public Response<List<PermissionModel>> getPermissionsByUsername(String username) {
+        Response<List<PermissionModel>> response = new Response<>();
+        try {
+            List<PermissionModel> list = userService.getPermissionsByUsername(username);
+            response.setResult(list);
+        } catch (Exception e) {
+            log.error("查询用户权限信息信息异常！原因：{}", e.getStackTrace());
             e.printStackTrace();
             response.setError("查询失败");
         }

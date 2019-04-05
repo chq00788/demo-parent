@@ -119,6 +119,13 @@ public class UserService {
         return roots;
     }
 
+    /**
+     * 组织菜单信息
+     *
+     * @param menuList
+     * @param pid
+     * @return
+     */
     private List<PermissionModel> createMenus(List<PermissionModel> menuList, Integer pid) {
         List<PermissionModel> menus = new ArrayList<>();
         for (PermissionModel model : menuList) {
@@ -127,5 +134,23 @@ public class UserService {
             }
         }
         return menus;
+    }
+
+
+    /**
+     * 根据用户名查询用户权限信息
+     *
+     * @param username
+     * @return
+     */
+    public List<PermissionModel> getPermissionsByUsername(String username) {
+        UserModel user = userDao.getMenusByUsername(username);
+        HashSet<PermissionModel> perms = new HashSet<>();
+        if (null != user) {
+            for (RoleModel role : user.getRoleList()) {
+                perms.addAll(role.getPermissionList());
+            }
+        }
+        return new ArrayList<>(perms);
     }
 }
