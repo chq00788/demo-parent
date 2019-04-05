@@ -1,4 +1,4 @@
-package com.chq.demo.system.common.entity;
+package com.chq.demo.common.entity;
 
 import java.io.Serializable;
 

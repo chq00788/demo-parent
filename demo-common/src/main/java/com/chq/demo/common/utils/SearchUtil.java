@@ -1,4 +1,4 @@
-package com.chq.demo.system.common.utils;
+package com.chq.demo.common.utils;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;

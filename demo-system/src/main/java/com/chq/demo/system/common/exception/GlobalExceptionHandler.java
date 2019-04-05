@@ -2,7 +2,8 @@ package com.chq.demo.system.common.exception;
 
 
 
-import com.chq.demo.system.common.entity.Response;
+
+import com.chq.demo.common.entity.Response;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;

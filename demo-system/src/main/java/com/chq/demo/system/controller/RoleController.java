@@ -1,8 +1,9 @@
 package com.chq.demo.system.controller;
 
 
-import com.chq.demo.system.common.entity.Response;
-import com.chq.demo.system.common.utils.SearchUtil;
+
+import com.chq.demo.common.entity.Response;
+import com.chq.demo.common.utils.SearchUtil;
 import com.chq.demo.system.model.RoleModel;
 import com.chq.demo.system.service.RoleService;
 import com.github.pagehelper.PageHelper;
