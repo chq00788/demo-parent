@@ -1,0 +1,17 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: demo-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
+      routes:
+      - id: demo-system
+        uri: lb://demo-system
+        order: 8000
+        predicates:
+        - Path=/user/**

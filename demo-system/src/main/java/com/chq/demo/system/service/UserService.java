@@ -5,8 +5,8 @@ import com.chq.demo.common.model.system.PermissionModel;
 import com.chq.demo.common.model.system.RoleModel;
 import com.chq.demo.common.model.system.UserModel;
 import com.chq.demo.system.dao.UserDao;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +26,9 @@ public class UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 查询数据
@@ -145,6 +148,11 @@ public class UserService {
      * @return
      */
     public List<PermissionModel> getPermissionsByUsername(String username) {
+        //先从redis数据库查如果没有再从数据查
+        List<PermissionModel> redisPermissions = (List<PermissionModel>) redisTemplate.opsForValue().get("permission-username-" + username);
+        if (null != redisPermissions) {
+            return redisPermissions;
+        }
         UserModel user = userDao.getMenusByUsername(username);
         HashSet<PermissionModel> perms = new HashSet<>();
         if (null != user) {
@@ -152,6 +160,8 @@ public class UserService {
                 perms.addAll(role.getPermissionList());
             }
         }
-        return new ArrayList<>(perms);
+        List<PermissionModel> permissions = new ArrayList<>(perms);
+        redisTemplate.opsForValue().set("permission-username-" + username, permissions);
+        return permissions;
     }
 }

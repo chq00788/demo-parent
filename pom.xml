@@ -16,6 +16,7 @@
         <module>demo-config</module>
         <module>demo-common</module>
         <module>demo-system</module>
+        <module>demo-gateway</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
