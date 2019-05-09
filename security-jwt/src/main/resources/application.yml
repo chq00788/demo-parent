@@ -1,0 +1,9 @@
+server:
+  port: 8001
+
+jwt:
+  tokenHeader: Authorization
+  tokenPrefix: Bearer
+  secret: myjwt
+  expiration: 3600
+  rememberExpiration: 604800
