@@ -1,17 +1,30 @@
+
+
+#server.port=8888
+#spring.application.name=demo-gateway
+## 指定注册中心地址
+#eureka.client.service-url.defaultZone=http://127.0.0.1:8000/eureka/
+#eureka.instance.prefer-ip-address=true
+
 server:
-  port: 8080
+  port: 8888
 spring:
   application:
     name: demo-gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8000/eureka/
+  instance:
+    prefer-ip-address: true
+
+---
+spring:
   cloud:
     gateway:
       discovery:
         locator:
-          enabled: false
-          lower-case-service-id: true
-      routes:
-      - id: demo-system
-        uri: lb://demo-system
-        order: 8000
-        predicates:
-        - Path=/user/**
+          # 是否可以通过其他服务的serviceId来转发到具体的服务实例。默认为false
+          # 为true,自动创建路由,路由访问方式：http://Gateway_HOST:Gateway_PORT/大写的serviceId/**，其中微服务应用名默认大写访问
+          enabled: true
+
