@@ -20,6 +20,6 @@ public class RestAuthenticationAccessDeniedHandler implements AccessDeniedHandle
 
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
-        ResponseUtil.write(response, ResultUtil.error(ResultEnum.ACCESS_NOT));
+        ResponseUtil.write(response, ResultUtil.error(ResultEnum.ACCESS_PERMISSION_DENIED));
     }
 }

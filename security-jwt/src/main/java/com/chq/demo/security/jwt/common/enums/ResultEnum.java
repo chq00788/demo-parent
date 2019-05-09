@@ -10,12 +10,12 @@ public enum ResultEnum {
     /**
      * 权限不足
      */
-    ACCESS_NOT(501, "权限不足"),
+    ACCESS_PERMISSION_DENIED(5001, "权限不足"),
 
     /**
      * token无效，请重新登录
      */
-    TOKEN_IS_NOT_VALID(502, "token无效，请重新登录"),
+    TOKEN_IS_NOT_VALID(5002, "Token无效，请重新登录"),
     ;
 
     private Integer code;
